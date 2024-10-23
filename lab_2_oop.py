@@ -1,9 +1,8 @@
-import math
+import math as mt
 
 
 # Завдання 1: Визначення найближчої точки до A
 def task_if20():
-
     # Визначає, яка з точок B або C знаходиться ближче до точки A.
 
     try:
@@ -21,40 +20,42 @@ def task_if20():
         else:
             print(f"Точки B і C однаково віддалені від точки A. Відстань: {distance_B}")
     except ValueError:
-        print("введіть правильні числа.")
+        print("Введіть правильні числа.")
 
 
 # Завдання 2: Визначення кількості точок в зеленій області (варіант 11)
-def task_geometry11(points):
+def task_geometry11(r, x, y):
+    # Умова для нижнього зеленого півкола
+    is_in_lower_circle = (x ** 2 + (y + r) ** 2) <= r ** 2 and y <= 0
 
-    #Підраховує кількість точок, що потрапляють в зелену область.
-    #points - список точок (кожна точка має координати (x, y)).
+    # Умова для верхнього зеленого сегмента
+    angle = mt.atan2(y - r, x - r)
+    is_in_upper_segment = (x - r) ** 2 + (y - r) ** 2 <= r ** 2 and (0 <= angle <= mt.pi / 2)
 
-    count = 0
-    r = 1
-    for x, y in points:
-        # Умова для попадання точки в зелену область
-        if (x - r) ** 2 + (y - r) ** 2 <= r ** 2:
-            count += 1
-    return count
+    # Перевірка потрапляння в зелені області
+    if is_in_lower_circle or is_in_upper_segment:
+        return "Точка в зеленій області!"
+    else:
+        return "Точка поза зеленою областю."
 
 
 # Завдання 3: Дослідження збіжності ряду
-def task_series10(epsilon=1e-10, g=1e10):
+def task_series10(epsilon=1e-10, max_iter=100):
+    # Початкові параметри
+    term = (mt.factorial(1) - 3 ** 1) / (1 ** 1)  # Перший член ряду
+    print(f"Initial term: {term}")
 
-    # epsilon - маленька величина для завершення циклу при збіжності.
-
-    n = 1
-    s = 0
-    while True:
-        term = (math.factorial(n) - 3 ** n) / n ** n
+    s = term  # Початкова сума
+    n = 2  # Починаємо з другого члена
+    e = epsilon  # Точність
+    while abs(term) > e:  # Поки не досягнемо потрібної точності
+        term = (mt.factorial(n) - 3 ** n) / (n ** n)
+        print(f"Term at n={n}: {term}")
         s += term
-
-        if abs(term) < epsilon:
-            print(f"Ряд збігається. Сума: {s}")
-            break
-        elif abs(term) > g:
-            print(f"Ряд розбігається. Сума: {s}")
-            break
-
         n += 1
+        if n > max_iter:
+            print("Error: Series did not converge within iteration limit.")
+            return None
+
+    print(f"Series converged to: {s}")
+    return s
