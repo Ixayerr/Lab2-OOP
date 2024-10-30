@@ -24,19 +24,32 @@ def task_if20():
 
 
 # Завдання 2: Визначення кількості точок в зеленій області (варіант 11)
-def task_geometry11(r, x, y):
-    # Умова для нижнього зеленого півкола
-    is_in_lower_circle = (x ** 2 + (y + r) ** 2) <= r ** 2 and y <= 0
+def task_geometry11():
+    try:
+        # Отримати радіус кола
+        r = float(input("Введіть радіус r: "))
+        # Отримати кількість точок
+        points = [(float(input("x: ")), float(input("y: "))) for _ in range(int(input("Кількість точок: ")))]
 
-    # Умова для верхнього зеленого сегмента
-    angle = mt.atan2(y - r, x - r)
-    is_in_upper_segment = (x - r) ** 2 + (y - r) ** 2 <= r ** 2 and (0 <= angle <= mt.pi / 2)
+        # Лічильник для точок, що знаходяться в зеленій області
+        count = 0
 
-    # Перевірка потрапляння в зелені області
-    if is_in_lower_circle or is_in_upper_segment:
-        return "Точка в зеленій області!"
-    else:
-        return "Точка поза зеленою областю."
+        # Перевірка кожної точки на належність зеленій області
+        for x, y in points:
+            # Умова для нижнього зеленого півкола
+            is_in_lower_circle = (x ** 2 + (y + r) ** 2) <= r ** 2 and y <= 0
+
+            # Умова для верхнього зеленого сегмента
+            angle = mt.atan2(y - r, x - r)
+            is_in_upper_segment = (x - r) ** 2 + (y - r) ** 2 <= r ** 2 and (0 <= angle <= mt.pi / 2)
+
+            # Перевірка потрапляння в зелені області
+            if is_in_lower_circle or is_in_upper_segment:
+                count += 1
+
+        print(f"Кількість точок у зеленій області: {count}")
+    except ValueError:
+        print("Введіть правильні числа.")
 
 
 # Завдання 3: Дослідження збіжності ряду
