@@ -17,21 +17,7 @@ def menu():
                 task_if20()
 
             elif choice == 2:
-                # Отримати радіус кола
-                r = float(input("Введіть радіус r: "))
-
-                # Отримати кількість точок
-                points = [(float(input("x: ")), float(input("y: "))) for _ in range(int(input("Кількість точок: ")))]
-
-                # Лічильник для точок, що знаходяться в зеленій області
-                count = 0
-
-                # Перевірка кожної точки на належність зеленій області
-                for x, y in points:
-                    if task_geometry11(r, x, y) == "Точка в зеленій області!":
-                        count += 1
-
-                print(f"Кількість точок у зеленій області: {count}")
+                task_geometry11()
 
             elif choice == 3:
                 task_series10()
